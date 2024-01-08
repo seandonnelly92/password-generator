@@ -88,7 +88,7 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-var newArray = []
+var newArray = [] // Defining a new array that will later contain all possible characters of the password.
 
 // Function to prompt user for password options
 function getPasswordOptions() {
@@ -96,11 +96,11 @@ function getPasswordOptions() {
   // No. of Characters
   var noOfCharacters = prompt("How many characters should your password have? Choose between 8 and 128 characters.") 
   
-  // This needs to validate to between 8 and 128 characters.
-  // If < 8 characters, alert("Please enter a number between 8 and 128");
-
-  // Special Characters
-
+  if (isNaN(noOfCharacters) || noOfCharacters < 8 || noOfCharacters > 128) { // Validation: if it not a number or less than 8 or more than 128...
+    alert("You must input a number between 8 and 128");
+    getPasswordOptions() // This re-calls the function to start it again if the invalid conditions are met.
+  }
+  
   var includeSpecialCharacters = confirm("Would you like to include special characters in your password? Choose 'OK' for yes and 'Cancel' for no.")
   if (includeSpecialCharacters) {
     newArray = [...specialCharacters]
@@ -120,21 +120,20 @@ function getPasswordOptions() {
   if (includeUpperCase) {
     newArray = [...newArray, ...upperCasedCharacters]
   }
+
+  newArray = [...newArray, ...newArray, ...newArray, ...newArray, ...newArray] // I added this to ensure that the same character could appear multiple times. This would not be possible if we only included one 'newArray'.
+  console.log(newArray)
+
   // Validation: must include one character type, must be 8-128 characters. 
 
 }
 
-// Function for getting a random element from an array
-function getRandom(noOfCharacters) {
-  // Randomise order of an array, then slice 0 to noOfCharacters. 
 
-}
 
 // Function to generate password with user input
 function generatePassword() {
   getPasswordOptions()
-  console.log(newArray)
-  getRandom()
+  shuffleArray()
 
   var randomPassword;
 
