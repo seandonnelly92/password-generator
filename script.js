@@ -88,56 +88,69 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-var newArray = [] // Defining a new array that will later contain all possible characters of the password.
+var potentialCharacters = [] // Defining a new array that will later contain all possible characters of the password.
 
 // Function to prompt user for password options
-function getPasswordOptions() {
-  newArray = []
-  // No. of Characters
+function passwordPrompts() {
+  var potentialCharacters = [] 
+
   var noOfCharacters = prompt("How many characters should your password have? Choose between 8 and 128 characters.") 
   
   if (isNaN(noOfCharacters) || noOfCharacters < 8 || noOfCharacters > 128) { // Validation: if it not a number or less than 8 or more than 128...
     alert("You must input a number between 8 and 128");
-    getPasswordOptions() // This re-calls the function to start it again if the invalid conditions are met.
+    passwordPrompts() // This re-calls the function to start it again if the invalid conditions are met.
+    return;
   }
-  
+
   var includeSpecialCharacters = confirm("Would you like to include special characters in your password? Choose 'OK' for yes and 'Cancel' for no.")
   if (includeSpecialCharacters) {
-    newArray = [...specialCharacters]
+    potentialCharacters = [...specialCharacters];
+    console.log(potentialCharacters)
+
   }
 
   var includeNumbers = confirm("Would you like to include numbers in your password? Choose 'OK' for yes and 'Cancel' for no.")
   if (includeNumbers) {
-    newArray = [...newArray, ...numericCharacters]
+    potentialCharacters = [...potentialCharacters, ...numericCharacters];
+    console.log(potentialCharacters)
+
   }
 
   var includeLowerCase = confirm("Would you like to include lower case letters in your password? Choose 'OK' for yes and 'Cancel' for no.")
   if (includeLowerCase) {
-    newArray = [...newArray, ...lowerCasedCharacters]
+    potentialCharacters = [...potentialCharacters, ...lowerCasedCharacters];
+    console.log(potentialCharacters)
+
   }
   
   var includeUpperCase = confirm("Would you like to include upper case letters in your password? Choose 'OK' for yes and 'Cancel' for no.")
   if (includeUpperCase) {
-    newArray = [...newArray, ...upperCasedCharacters]
+    potentialCharacters = [...potentialCharacters, ...upperCasedCharacters];
+    console.log(potentialCharacters)
   }
 
-  newArray = [...newArray, ...newArray, ...newArray, ...newArray, ...newArray] // I added this to ensure that the same character could appear multiple times. This would not be possible if we only included one 'newArray'.
-  console.log(newArray)
-
-  // Validation: must include one character type, must be 8-128 characters. 
-
+  if (!includeSpecialCharacters && !includeNumbers && !includeLowerCase && !includeUpperCase) {
+    alert("You must select at least one character type.");
+    passwordPrompts(); // This re-calls the function to start it again. I may go back and make it start from the second prompt by nesting a new function.
+    return;
+  }
 }
-
-
 
 // Function to generate password with user input
 function generatePassword() {
-  getPasswordOptions()
-  shuffleArray()
+  passwordPrompts()
 
-  var randomPassword;
-
-  return randomPassword
+  function generateRandomPassword(potentialCharacters, noOfCharacters) {
+    var randomPassword = "";
+    for (let i = 0; i < noOfCharacters; i++) { // Loops through each index of my potentialCharacters array
+      const randomIndex = Math.floor(Math.random() * potentialCharacters.length); // Declares new variable called randomIndex which is a random index from the array
+      // Math.random gives a random float between 0 and 1 e.g. 0.27. The array length is 85. So it could be 0.27*85 = 22.95. Math.floor rounds it down. So it would be 22. Index 22 would be chosen. 
+      randomPassword += potentialCharacters[randomIndex];   // Append the selected character to the password. += is the compound assignment operator for addition and assignment. It adds the value on the right-hand side to the variable on the left-hand side and then assigns the result back to the variable.
+    }
+    return randomPassword
+    console.log(randomPassword) 
+  }
+  
 
 }
 
