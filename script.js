@@ -93,8 +93,6 @@ var noOfCharacters = 8;
 
 // Function to prompt user for password options
 function passwordPrompts() {
-  var potentialCharacters = [] 
-
   var noOfCharacters = prompt("How many characters should your password have? Choose between 8 and 128 characters."); 
   console.log(noOfCharacters);
 
@@ -153,7 +151,7 @@ console.log(noOfCharacters)
   }
 
 
-  var newpassword = generateRandomPassword(); // calling the generatePassword function and storing the resulting value in this new password variable.
+  var newpassword = generateRandomPassword(potentialCharacters, noOfCharacters); // calling the generatePassword function and storing the resulting value in this new password variable.
   console.log(newpassword); // Console logging this new variable's value 
 
 // Get references to the #generate element
@@ -162,7 +160,7 @@ var generateBtn = document.querySelector('#generate');  // Creates a new var whi
 // Write password to the #password input
 function writePassword() {
   passwordPrompts();
-  var password = generateRandomPassword(); // calling the generatePassword function and storing the resulting value in this new password variable.
+  var password = generateRandomPassword(potentialCharacters, noOfCharacters); // calling the generatePassword function and storing the resulting value in this new password variable.
   console.log(password); // Console logging this new variable's value 
   var passwordText = document.querySelector('#password'); // declare new variable which is filled with the placeholder text
   passwordText.value = password; // Overwriting the placeholder text with the generated password 
