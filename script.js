@@ -93,6 +93,7 @@ var noOfCharacters = 8;
 
 // Function to prompt user for password options
 function passwordPrompts() {
+  potentialCharacters = [];
   var noOfCharacters = prompt("How many characters should your password have? Choose between 8 and 128 characters."); 
   console.log(noOfCharacters);
 
@@ -164,6 +165,8 @@ function writePassword() {
   console.log(password); // Console logging this new variable's value 
   var passwordText = document.querySelector('#password'); // declare new variable which is filled with the placeholder text
   passwordText.value = password; // Overwriting the placeholder text with the generated password 
+  potentialCharacters = []; // emptying the potential characters array so that the password generator can be re-used
+  noOfCharacters = 0; // Resetting noOfCharacters
 }
 
 // Add event listener to generate button
